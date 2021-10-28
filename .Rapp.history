@@ -1,0 +1,408 @@
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("readr")
+install.packages("sf")
+install.packages("RColorBrewer")
+install.packages("classInt")
+install.packages("RMeCab")
+applyno <- 1:99999
+str(applyno)
+status  <- rep(c("申請受理","振込対応中","振込完了","不受理"), times=25000)
+str(status)
+applyno <- 1:100000
+str(applyno)
+date1   <- seq(as.Date("2020/05/01"), as.Date("2020/06/30"), "days")
+str(data1)
+str(date1)
+data1
+date1
+date 　 <- seq(as.Date("2020/05/01"), as.Date("2020/06/19"), "days")
+DATE
+date
+date1   <- rep(date, times=2000)
+str(date1)
+dateA 　<- seq(as.Date("2020/05/01"), as.Date("2020/06/19"), "days")#
+date1   <- rep(dateA, times=2000)
+dateB 　<- seq(as.Date("2020/07/01"), as.Date("2020/08/18"), "days")
+dateB
+dateB 　<- seq(as.Date("2020/07/01"), as.Date("2020/08/19"), "days")#
+date2   <- rep(dateB, times=2000)
+dateB
+str(data2)
+str(date2)
+data <- data.frame(ApplyNo=applyno, Status=status, ApplyDate=date1, PlanDate=date2)
+str(data)
+write.csv(data, "dummy.csv", fileEncoding="CP932", row.names=FALSE)
+library(sf)
+setwd(~/Desktop/osakacity_shape)
+setwd("~/Desktop/osakacity_shape/")
+shape <- st_read(dsn="~/Desktop/", layer="osakacity_shape")
+shape <- st_read(dsn="~/Desktop/osakacity_shape/", layer="osakacity_shape")
+shape <- st_read(dsn="~/Desktop/osakacity_shape/", layer="osakacity")
+shape
+str(CITYNAME)
+print(CITYNAME)
+print(shape.CITYNAME)
+colnames(shape)
+rownames(shape.CITYNAME)
+rownames(shape$CITYNAME)
+rownames(CITYNAME)
+rownames(shape)
+print shape$CITYNAME
+print(shape$CITYNAME)
+library(dplyr)#
+library(sf)#
+library(readr)#
+library(RColorBrewer)#
+library(classInt)
+data1 <- read_csv("jyuki202106.csv")
+str(data1)
+data2 <- data1 %>% filter(data1$男女別=="計")
+str(data2)
+data2$区名
+summary(data2$総数)
+summary(data2$総数[:-1])
+summary(data2$総数[:24])
+summary(data2$総数[1:24])
+column = colnames(data)
+column
+print(column)
+column = colnames(data2)
+column
+data <- left_join(shape, data2, by=c("CITYNAME"="区名"))
+str(data)
+column = colnames(data)
+column
+data[[column[9]]]
+kuname="大阪市"#
+#
+########################################################
+#総数　ファイルに書き出し 総数は9#
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"YlGnBu"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, " ", column[i], "  (令和3年6月末現在)", sep=""))#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.001, labels=shape$CITYNAME, cex=0.3)#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2], labels=data[[column[i]]], cex=0.4)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"YlGnBu"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, " ", column[i], "  (令和3年6月末現在)", sep=""))#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.01, labels=shape$CITYNAME, cex=1)#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2], labels=data[[column[i]]], cex=1)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, " ", column[i], "  (令和3年6月末現在)", sep=""))#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.01, labels=shape$CITYNAME, cex=1)#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2], labels=data[[column[i]]], cex=1)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"YlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, " ", column[i], "  (令和3年6月末現在)", sep=""))#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.01, labels=shape$CITYNAME, cex=1)#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2], labels=data[[column[i]]], cex=1)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, " ", column[i], "  (令和3年6月末現在)", sep=""))#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.01, labels=shape$CITYNAME, cex=1)#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2], labels=data[[column[i]]], cex=1)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, " ", column[i], "  (令和3年6月末現在)", sep=""))#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.005, labels=shape$CITYNAME, cex=1)#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=1)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, " ", column[i], "  (令和3年6月末現在)", sep=""))#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.005, labels=shape$CITYNAME, cex=0.8)#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, " ", column[i], "  (令和3年6月末現在)", sep=""))#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8)#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8)#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col=cyan)#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="cyan")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="purple")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray48")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray24")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  text(st_coordinates(shape %>% st_centroid)[,1]+0.0005, st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray24")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  #背景が濃い場合、テキストの視認性が落ちるため２色をシャドーとして描画#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray24")#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]+0.005, labels=shape$CITYNAME, cex=0.8, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  #背景が濃い場合、テキストの視認性が落ちるため２色をシャドーとして描画#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray24")#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]+0.0025, labels=shape$CITYNAME, cex=0.8, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  #背景が濃い場合、テキストの視認性が落ちるため２色をシャドーとして描画#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray24")#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]+0.0022, labels=shape$CITYNAME, cex=0.8, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  #背景が濃い場合、テキストの視認性が落ちるため２色をシャドーとして描画#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]+0.0022, labels=shape$CITYNAME, cex=0.8, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray24")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  #背景が濃い場合、テキストの視認性が落ちるため２色をシャドーとして描画#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]+0.0022, labels=shape$CITYNAME, cex=0.85, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray24")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  #背景が濃い場合、テキストの視認性が落ちるため２色をシャドーとして描画#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]+0.0022, labels=shape$CITYNAME, cex=0.8, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray24")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75)#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  #背景が濃い場合、テキストの視認性が落ちるため２色をシャドーとして描画#
+  #区名#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]+0.0022, labels=shape$CITYNAME, cex=0.8, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray24")#
+  #人口#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]-0.0052, labels=data[[column[i]]], cex=0.75), col="gray24")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75), col="gray24")#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  #背景が濃い場合、テキストの視認性が落ちるため２色をシャドーとして描画#
+  #区名#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]+0.0022, labels=shape$CITYNAME, cex=0.8, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray24")#
+  #人口#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]-0.0052, labels=data[[column[i]]], cex=0.75, col="gray24")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75), col="gray24")#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  #背景が濃い場合、テキストの視認性が落ちるため２色をシャドーとして描画#
+  #区名#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]+0.0022, labels=shape$CITYNAME, cex=0.8, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray24")#
+  #人口#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]-0.0052, labels=data[[column[i]]], cex=0.75, col="gray24")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75, col="gray24")#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  #背景が濃い場合、テキストの視認性が落ちるため２色をシャドーとして描画#
+  #区名#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]+0.0022, labels=shape$CITYNAME, cex=0.8, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray24")#
+  #人口#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]-0.0052, labels=data[[column[i]]], cex=0.75, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75, col="gray24")#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="pdf", file=sprintf("大阪市全域住基R0306_総数.pdf"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  #背景が濃い場合、テキストの視認性が落ちるため２色をシャドーとして描画#
+  #区名#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]+0.0022, labels=shape$CITYNAME, cex=0.8, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray24")#
+  #人口#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.00045, st_coordinates(shape %>% st_centroid)[,2]-0.0051, labels=data[[column[i]]], cex=0.75, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75, col="gray24")#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="png", file=sprintf("大阪市全域住基R0306_総数.png"))#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  #背景が濃い場合、テキストの視認性が落ちるため２色をシャドーとして描画#
+  #区名#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]+0.0022, labels=shape$CITYNAME, cex=0.8, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray24")#
+  #人口#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.00045, st_coordinates(shape %>% st_centroid)[,2]-0.0051, labels=data[[column[i]]], cex=0.75, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75, col="gray24")#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="png", file=sprintf("大阪市全域住基R0306_総数.png"), dpi=144, bg="white")#
+	par(new=TRUE, mex="0.2", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  #背景が濃い場合、テキストの視認性が落ちるため２色をシャドーとして描画#
+  #区名#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]+0.0022, labels=shape$CITYNAME, cex=0.8, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray24")#
+  #人口#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.00045, st_coordinates(shape %>% st_centroid)[,2]-0.0051, labels=data[[column[i]]], cex=0.75, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75, col="gray24")#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="png", file=sprintf("大阪市全域住基R0306_総数.png"), dpi=144, bg="white")#
+	par(new=TRUE, mex="0.5", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  #背景が濃い場合、テキストの視認性が落ちるため２色をシャドーとして描画#
+  #区名#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]+0.0022, labels=shape$CITYNAME, cex=0.8, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray24")#
+  #人口#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.00045, st_coordinates(shape %>% st_centroid)[,2]-0.0051, labels=data[[column[i]]], cex=0.75, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75, col="gray24")#
+  dev.off()#
+}
+for(i in 9:9){#
+  quartz(type="png", file=sprintf("大阪市全域住基R0306_総数.png"), dpi=144, bg="white")#
+	par(new=TRUE, mex="0.5", family="HiraKakuProN-W3", xpd=TRUE, xaxt="n")#
+  col_km <- data[[column[i]]] %>% classIntervals(., 10, style="fixed", fixedBreaks=c(9999,20000,40000,60000,80000,100000,120000,140000,160000,180000,max(.))) %>% findColours(.,pal=brewer.pal(10,"RdYlGn"))#
+  plot(st_geometry(shape[7]), col=col_km, main=paste(kuname, "　住民基本台帳人口　", column[i], " (令和3年6月末現在)", sep=""))#
+  #背景が濃い場合、テキストの視認性が落ちるため２色をシャドーとして描画#
+  #区名#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.0005, st_coordinates(shape %>% st_centroid)[,2]+0.0022, labels=shape$CITYNAME, cex=0.8, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]+0.002, labels=shape$CITYNAME, cex=0.8, col="gray14")#
+  #人口#
+  text(st_coordinates(shape %>% st_centroid)[,1]-0.00045, st_coordinates(shape %>% st_centroid)[,2]-0.0051, labels=data[[column[i]]], cex=0.75, col="gray99")#
+  text(st_coordinates(shape %>% st_centroid)[,1], st_coordinates(shape %>% st_centroid)[,2]-0.005, labels=data[[column[i]]], cex=0.75, col="gray14")#
+  dev.off()#
+}
